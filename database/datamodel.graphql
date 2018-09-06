@@ -21,3 +21,12 @@ type Vote {
   sample: Sample!
   user: User!
 }
+
+type Agreement {
+  id: ID! @unique
+  name: String!
+}
+
+# type Event {
+#   id: ID
+# }

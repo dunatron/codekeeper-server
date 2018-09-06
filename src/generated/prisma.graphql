@@ -1,5 +1,9 @@
 # source: https://us1.prisma.sh/heath-dunlop-37e897/codekeeper-db/dev
-# timestamp: Wed Sep 05 2018 10:36:18 GMT+1200 (NZST)
+# timestamp: Thu Sep 06 2018 16:05:13 GMT+1200 (NZST)
+
+type AggregateAgreement {
+  count: Int!
+}
 
 type AggregateSample {
   count: Int!
@@ -11,6 +15,188 @@ type AggregateUser {
 
 type AggregateVote {
   count: Int!
+}
+
+type Agreement implements Node {
+  id: ID!
+  name: String!
+}
+
+"""A connection to a list of items."""
+type AgreementConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [AgreementEdge]!
+  aggregate: AggregateAgreement!
+}
+
+input AgreementCreateInput {
+  name: String!
+}
+
+"""An edge in a connection."""
+type AgreementEdge {
+  """The item at the end of the edge."""
+  node: Agreement!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum AgreementOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type AgreementPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type AgreementSubscriptionPayload {
+  mutation: MutationType!
+  node: Agreement
+  updatedFields: [String!]
+  previousValues: AgreementPreviousValues
+}
+
+input AgreementSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AgreementSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AgreementSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AgreementSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: AgreementWhereInput
+}
+
+input AgreementUpdateInput {
+  name: String
+}
+
+input AgreementWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AgreementWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AgreementWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AgreementWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+}
+
+input AgreementWhereUniqueInput {
+  id: ID
 }
 
 type BatchPayload {
@@ -30,21 +216,27 @@ type Mutation {
   createSample(data: SampleCreateInput!): Sample!
   createUser(data: UserCreateInput!): User!
   createVote(data: VoteCreateInput!): Vote!
+  createAgreement(data: AgreementCreateInput!): Agreement!
   updateSample(data: SampleUpdateInput!, where: SampleWhereUniqueInput!): Sample
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateVote(data: VoteUpdateInput!, where: VoteWhereUniqueInput!): Vote
+  updateAgreement(data: AgreementUpdateInput!, where: AgreementWhereUniqueInput!): Agreement
   deleteSample(where: SampleWhereUniqueInput!): Sample
   deleteUser(where: UserWhereUniqueInput!): User
   deleteVote(where: VoteWhereUniqueInput!): Vote
+  deleteAgreement(where: AgreementWhereUniqueInput!): Agreement
   upsertSample(where: SampleWhereUniqueInput!, create: SampleCreateInput!, update: SampleUpdateInput!): Sample!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertVote(where: VoteWhereUniqueInput!, create: VoteCreateInput!, update: VoteUpdateInput!): Vote!
+  upsertAgreement(where: AgreementWhereUniqueInput!, create: AgreementCreateInput!, update: AgreementUpdateInput!): Agreement!
   updateManySamples(data: SampleUpdateInput!, where: SampleWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyVotes(data: VoteUpdateInput!, where: VoteWhereInput): BatchPayload!
+  updateManyAgreements(data: AgreementUpdateInput!, where: AgreementWhereInput): BatchPayload!
   deleteManySamples(where: SampleWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyVotes(where: VoteWhereInput): BatchPayload!
+  deleteManyAgreements(where: AgreementWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -78,12 +270,15 @@ type Query {
   samples(where: SampleWhereInput, orderBy: SampleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Sample]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   votes(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Vote]!
+  agreements(where: AgreementWhereInput, orderBy: AgreementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Agreement]!
   sample(where: SampleWhereUniqueInput!): Sample
   user(where: UserWhereUniqueInput!): User
   vote(where: VoteWhereUniqueInput!): Vote
+  agreement(where: AgreementWhereUniqueInput!): Agreement
   samplesConnection(where: SampleWhereInput, orderBy: SampleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SampleConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   votesConnection(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VoteConnection!
+  agreementsConnection(where: AgreementWhereInput, orderBy: AgreementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AgreementConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -425,6 +620,7 @@ type Subscription {
   sample(where: SampleSubscriptionWhereInput): SampleSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   vote(where: VoteSubscriptionWhereInput): VoteSubscriptionPayload
+  agreement(where: AgreementSubscriptionWhereInput): AgreementSubscriptionPayload
 }
 
 type User implements Node {
